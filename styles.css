@@ -1,0 +1,10 @@
+.grid{
+    display:grid;
+    grid-template: repeat(3,1fr)/repeat(3,1fr);
+    gap: 10px;
+    border: 2px solid black
+}
+
+.cell{
+    border: 2px solid black
+}
