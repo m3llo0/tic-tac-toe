@@ -4,12 +4,12 @@ class Gameboard{
             [1, 2, 3],  // Row 1
             [4, 5, 6],  // Row 2
             [7, 8, 9],  // Row 3
-          ];
+          ]
     }
 
     updateBoard(row, col, symbol){
-        this.grid[row][col] = symbol
-    }
+            this.grid[row][col] = symbol
+        }
 }
 
 class Player{
@@ -63,15 +63,23 @@ class Game{
         }
     }
 
-    makeMove(){
-        if (this.turn % 2 === 0){
-            updateBoard(row, col, "X")
+    makeMove(row, col){
+        if (this.gameboard.grid[row][col]!= "X" && this.gameboard.grid[row][col]!= "O"){
+            this.gameboard.updateBoard(row, col, this.turn % 2 == 0 ? "X":"O")
+        } else {
+            console.log("pick again")
+            return
         }
-        else{
-            console.log("no")
-            updateBoard(row, col, "O")
-        }
-        this.turn +=1
+        this.checkWin()
+        this.checkDraw()
+        this.turn += 1
     }
 }
 const game= new Game()
+
+game.makeMove(0, 0); // X
+game.makeMove(0, 1); // O
+game.makeMove(1, 0); // X
+game.makeMove(1, 0); // O - Repeat
+game.makeMove(1, 1); // X
+game.makeMove(2, 0); // X - This should trigger a win
