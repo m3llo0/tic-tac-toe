@@ -1,10 +1,21 @@
-.grid{
-    display:grid;
-    grid-template: repeat(3,1fr)/repeat(3,1fr);
-    gap: 10px;
-    border: 2px solid black
+body{
+    background-color: skyblue;
 }
 
-.cell{
-    border: 2px solid black
+.grid {
+    display: grid;
+    margin-top: 150px;
+    width: 400px;
+    height: 400px;
+    justify-self: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    background-color: whitesmoke;
+
+}
+
+.cell {
+    border: black 2px solid;
+    padding: auto;
+
 }

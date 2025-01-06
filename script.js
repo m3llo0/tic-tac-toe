@@ -6,6 +6,15 @@ class Gameboard{
             [7, 8, 9],  // Row 3
           ]
     }
+    
+    createBoard(){
+        for(let i=0; i<9; i++){
+            const cell = document.createElement("div")
+            cell.className = "cell"
+            const grid = document.querySelector(".grid")
+            grid.appendChild(cell)
+        }
+    }
 
     updateBoard(row, col, symbol){
             this.grid[row][col] = symbol
@@ -76,6 +85,7 @@ class Game{
     }
 }
 const game= new Game()
+game.gameboard.createBoard() //initialise gameboard
 
 game.makeMove(0, 0); // X
 game.makeMove(0, 1); // O
