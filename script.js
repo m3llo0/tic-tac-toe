@@ -1,16 +1,17 @@
 class Gameboard{
-    constructor(){
+    constructor(game){
         this.grid = [
             [1, 2, 3],  // Row 1
             [4, 5, 6],  // Row 2
             [7, 8, 9],  // Row 3
           ]
         this.gridElement = document.querySelector(".grid")
+        this.game= game
     }
     
     createBoard(){
-        for(let row=1; row <=3; row++){
-            for(let col=1; col<=3; col++){
+        for(let row=0; row <=2; row++){
+            for(let col=0; col<=2; col++){
                 const cell = document.createElement("div")
                 cell.className = "cell"
                 cell.dataset.row = row //helps to assign identify each cell
@@ -20,11 +21,12 @@ class Gameboard{
         }
         }
 
-    addEventListener(){
+    retrieveData(){
             this.gridElement.addEventListener("click", (event) => {
-            row = event.target.dataset.row
-            col = event.target.dataset.col
-            Game.game.makeMove(row,col)
+                const row = parseInt(event.target.dataset.row)
+                const col = parseInt(event.target.dataset.col)
+                console.log(row,col)
+                this.game.makeMove(row,col)
         })
     }
 
@@ -44,7 +46,7 @@ class Player{
 
 class Game{
     constructor(){
-        this.gameboard = new Gameboard()
+        this.gameboard = new Gameboard(this)
         this.turn = 0
         this.player1 = new Player("Myself", "X")
         this.player2 = new Player("Opponent", "O")
@@ -52,7 +54,7 @@ class Game{
 
     checkWin(){
         //check rows
-        for(let row=1; row<3; row++){
+        for(let row=0; row<=2; row++){
             if(this.gameboard.grid[row][0] === this.gameboard.grid[row][1] && this.gameboard.grid[row][1] === this.gameboard.grid[row][2]) {
                 console.log("WIN")
                 return true
@@ -60,7 +62,7 @@ class Game{
         }
 
         //check columns
-        for(let col=0; col<3; col++){
+        for(let col=0; col<=2; col++){
             if(this.gameboard.grid[0][col] === this.gameboard.grid[1][col] && this.gameboard.grid[1][col] === this.gameboard.grid[2][col]){
                 console.log("WIN")
                 return true
@@ -100,10 +102,12 @@ class Game{
 }
 const game= new Game()
 game.gameboard.createBoard() //initialise gameboard
+game.gameboard.retrieveData()
 
-game.makeMove(0, 0); // X
+/*game.makeMove(0, 0); // X
 game.makeMove(0, 1); // O
 game.makeMove(1, 0); // X
 game.makeMove(1, 0); // O - Repeat
 game.makeMove(1, 1); // X
-game.makeMove(2, 0); // X - This should trigger a win
+game.makeMove(2, 0); // X - This should trigger a win*/
+
