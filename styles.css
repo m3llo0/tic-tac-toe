@@ -19,3 +19,7 @@ body{
     padding: auto;
 
 }
+
+.cell:hover{
+    background-color: slategray;
+}

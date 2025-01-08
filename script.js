@@ -5,20 +5,34 @@ class Gameboard{
             [4, 5, 6],  // Row 2
             [7, 8, 9],  // Row 3
           ]
+        this.gridElement = document.querySelector(".grid")
     }
     
     createBoard(){
-        for(let i=0; i<9; i++){
-            const cell = document.createElement("div")
-            cell.className = "cell"
-            const grid = document.querySelector(".grid")
-            grid.appendChild(cell)
+        for(let row=1; row <=3; row++){
+            for(let col=1; col<=3; col++){
+                const cell = document.createElement("div")
+                cell.className = "cell"
+                cell.dataset.row = row //helps to assign identify each cell
+                cell.dataset.col = col
+                this.gridElement.appendChild(cell)
+            }
         }
+        }
+
+    addEventListener(){
+            this.gridElement.addEventListener("click", (event) => {
+            row = event.target.dataset.row
+            col = event.target.dataset.col
+            Game.game.makeMove(row,col)
+        })
     }
 
     updateBoard(row, col, symbol){
             this.grid[row][col] = symbol
-        }
+    }
+
+
 }
 
 class Player{
@@ -38,7 +52,7 @@ class Game{
 
     checkWin(){
         //check rows
-        for(let row=0; row<3; row++){
+        for(let row=1; row<3; row++){
             if(this.gameboard.grid[row][0] === this.gameboard.grid[row][1] && this.gameboard.grid[row][1] === this.gameboard.grid[row][2]) {
                 console.log("WIN")
                 return true
