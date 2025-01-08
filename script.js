@@ -14,7 +14,7 @@ class Gameboard{
             for(let col=0; col<=2; col++){
                 const cell = document.createElement("div")
                 cell.className = "cell"
-                cell.dataset.row = row //helps to assign identify each cell
+                cell.dataset.row = row //helps to assign identity each cell
                 cell.dataset.col = col
                 this.gridElement.appendChild(cell)
             }
@@ -32,6 +32,11 @@ class Gameboard{
 
     updateBoard(row, col, symbol){
             this.grid[row][col] = symbol
+            if(symbol == "X"){
+                //add X visual
+            } else{
+                //add O visual
+            }
     }
 
 
