@@ -16,6 +16,9 @@ class Gameboard{
                 cell.className = "cell"
                 cell.dataset.row = row //helps to assign identity each cell
                 cell.dataset.col = col
+                cell.style.display = "flex"
+                cell.style.justifyContent = "center"
+                cell.style.alignItems = "center"
                 this.gridElement.appendChild(cell)
             }
         }
@@ -31,11 +34,18 @@ class Gameboard{
     }
 
     updateBoard(row, col, symbol){
+            const img = document.createElement("img")
+            img.height = 100
+            img.width = 100
+            const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`)
             this.grid[row][col] = symbol
             if(symbol == "X"){
-                //add X visual
+                img.src = "assets/x.png"
+                cell.appendChild(img)
+
             } else{
-                //add O visual
+                img.src = "assets/o.png"
+                cell.appendChild(img)
             }
     }
 
@@ -97,7 +107,6 @@ class Game{
         if (this.gameboard.grid[row][col]!= "X" && this.gameboard.grid[row][col]!= "O"){
             this.gameboard.updateBoard(row, col, this.turn % 2 == 0 ? "X":"O")
         } else {
-            console.log("pick again")
             return
         }
         this.checkWin()
