@@ -53,8 +53,7 @@ class Gameboard{
 }
 
 class Player{
-    constructor(name, symbol){
-        this.name = name
+    constructor(symbol){
         this.symbol = symbol
     }
 }
@@ -63,49 +62,47 @@ class Game{
     constructor(){
         this.gameboard = new Gameboard(this)
         this.turn = 0
-        this.player1 = new Player("Myself", "X")
-        this.player2 = new Player("Opponent", "O")
+        this.player1 = new Player("X")
+        this.player2 = new Player("O")
+        this.win = false
     }
 
     checkWin(){
         //check rows
         for(let row=0; row<=2; row++){
             if(this.gameboard.grid[row][0] === this.gameboard.grid[row][1] && this.gameboard.grid[row][1] === this.gameboard.grid[row][2]) {
-                console.log("WIN")
-                return true
+                this.win = true
+                this.displayResults()
             }
         }
 
         //check columns
         for(let col=0; col<=2; col++){
             if(this.gameboard.grid[0][col] === this.gameboard.grid[1][col] && this.gameboard.grid[1][col] === this.gameboard.grid[2][col]){
-                console.log("WIN")
-                return true
+                this.win = true
+                this.displayResults()
             }
         }
 
         //check diagonals
         if(this.gameboard.grid[0][0] === this.gameboard.grid[1][1] && this.gameboard.grid[1][1] === this.gameboard.grid[2][2]){
-            console.log("WIN")
-            return true
+            this.win = true
+            this.displayResults()
         } else if (this.gameboard.grid[0][2] === this.gameboard.grid[1][1] && this.gameboard.grid[1][1] === this.gameboard.grid[2][0]){
-            console.log("WIN")
-            return true
+            this.win = true
+            this.displayResults()
         }
     }
-    
+
     checkDraw(){
-        if(this.turn === 9){
-            console.log("DRAW")
-            return true
-        } else {
-            return false
+        if (this.turn == 8){
+            this.displayResults()
         }
     }
 
     makeMove(row, col){
         if (this.gameboard.grid[row][col]!= "X" && this.gameboard.grid[row][col]!= "O"){
-            this.gameboard.updateBoard(row, col, this.turn % 2 == 0 ? "X":"O")
+            this.gameboard.updateBoard(row, col, this.turn % 2 == 0 ? "O":"X")
         } else {
             return
         }
@@ -113,15 +110,49 @@ class Game{
         this.checkDraw()
         this.turn += 1
     }
+
+    displayResults(){
+       const result = document.createElement("div")
+       const body = document.querySelector("body")
+       result.className = "result"
+       body.appendChild(result)
+       const resultText = document.createElement("p")
+       if (this.win == true){
+            resultText.innerText = `${this.turn % 2 === 0 ? "O" : "X"} wins!`}
+        else{
+            resultText.innerText = "It's a Draw"}
+       result.appendChild(resultText)
+       const restart = document.createElement("button")
+       restart.className = "restart"
+       restart.innerText = "Restart"
+       result.appendChild(restart)
+       this.restartGame()
+    }
+
+
+    restartGame(){
+        const restartButton = document.querySelector(".restart")
+        const cells = document.querySelectorAll(".cell")
+        const result = document.querySelector(".result")
+        restartButton.addEventListener("click", () => {
+            cells.forEach(cell =>{
+                cell.remove()
+            })
+            this.turn = 0
+            this.win = false
+            this.gameboard.createBoard()
+            this.gameboard.retrieveData()
+            result.remove()
+            this.gameboard.grid = [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9]
+              ];
+        })
+    }
 }
 const game= new Game()
 game.gameboard.createBoard() //initialise gameboard
 game.gameboard.retrieveData()
 
-/*game.makeMove(0, 0); // X
-game.makeMove(0, 1); // O
-game.makeMove(1, 0); // X
-game.makeMove(1, 0); // O - Repeat
-game.makeMove(1, 1); // X
-game.makeMove(2, 0); // X - This should trigger a win*/
 
